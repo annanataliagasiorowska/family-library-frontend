@@ -3,11 +3,16 @@ import Book from './Book';
 
 const Books = ({ books }) => {
   return (
-    <div className="book-list">
+    <ul> 
       {books.map((book, index) => (
-        <Book key={index} title={book.title} author={book.authorLastName} releaseYear={book.releaseYear}/>
+        <Book 
+          key={index} 
+          title={book.title} 
+          author={book.authorLastName} 
+          releaseYear={book.releaseYear}
+        />
       ))}
-    </div>
+    </ul>
   );
 };
 

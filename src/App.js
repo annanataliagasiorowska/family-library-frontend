@@ -1,19 +1,26 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Books from './components/Books';
 
 const App = () => {
+  const API_URL = 'http://localhost:8080/api/books';
   const[books, setBooks] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
+
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw Error('Did not receive data');
+      const listBooks = await response.json();
+      setBooks(listBooks);
+      setFetchError(null);
+    } catch (err) {
+      setFetchError(err.message);
+    }
+  }
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/books')
-      .then(response => {
-        setBooks(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    fetchBooks();
   }, [])
 
   return (
